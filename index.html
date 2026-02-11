@@ -1,28 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script>
-        // Function to detect mobile devices
-        function isMobile() {
-            return /Mobi|Android/i.test(navigator.userAgent);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Mi Amor ❤️</title>
 
-        // Function to handle button click
-        function handleButtonClick() {
-            if (isMobile()) {
-                const noButton = document.getElementById('noButton');
-                if (noButton) {
-                    noButton.style.display = 'none'; // Remove button on mobile
-                }
-            }
-        }
-    </script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    background: black;
+    color: white;
+    text-align: center;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, #ff2e63, #000);
+    animation: latido 6s infinite alternate;
+    z-index: -1;
+}
+
+@keyframes latido {
+    from { transform: scale(1); opacity: 0.7; }
+    to { transform: scale(1.2); opacity: 1; }
+}
+
+.container {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+h1 { font-size: 3.5em; margin-bottom: 20px; animation: aparecer 3s ease forwards; }
+p { font-size: 1.5em; margin-bottom: 30px; opacity: 0; animation: aparecer 4s ease forwards; animation-delay: 2s; }
+
+button {
+    padding: 15px 40px;
+    font-size: 18px;
+    border-radius: 40px;
+    border: none;
+    background: #ff2e63;
+    color: white;
+    cursor: pointer;
+    transition: 0.4s;
+    margin: 10px;
+}
+
+button:hover { transform: scale(1.1); background: white; color: #ff2e63; }
+
+@keyframes aparecer { to { opacity: 1; } }
+
+.hidden { display: none; }
+
+.carta {
+    font-size: 1.3em;
+    margin-top: 20px;
+    padding: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    background: rgba(255, 46, 99, 0.2);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    animation: aparecer 2s ease forwards;
+}
+
+.corazon {
+    position: absolute;
+    font-size: 20px;
+    animation: flotar 6s linear infinite;
+    color: #ff2e63;
+}
+
+@keyframes flotar {
+    0% { transform: translateY(100vh); opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
+</style>
 </head>
+
 <body>
-    <button id="noButton" onclick="handleButtonClick()">No</button>
-    <p>Hello, World!</p>
+
+<div class="container" id="inicio">
+    <h1>Hola Mi Amor ❤️</h1>
+    <p>Desde que llegaste a mi vida… todo se siente diferente.</p>
+    <button onclick="pedirContraseña()">Abrir Mi Corazón 💌</button>
+</div>
+
+<div class="container hidden" id="pregunta">
+    <div id="carta" class="carta">
+        Desde el primer momento en que te vi,
+        supe que eras especial.<br>
+        Contigo todo es más bonito, más intenso, más real.<br>
+        Y por eso hoy quiero preguntarte algo…<br>
+        <strong>¿Quieres ser mi San Valentín? 💖</strong>
+    </div>
+    <button id="yesButton" onclick="explosionCorazones()">Sí ❤️</button>
+    <button id="noButton" onclick="huir()">No 😭</button>
+</div>
+
+<!-- Música que se activa al clic -->
+<audio id="musica" loop>
+  <source src="rush.mp3" type="audio/mpeg">
+  Tu navegador no soporta audio.
+</audio>
+
+<script>
+let password = prompt("Para entrar a mi sorpresa, escribe la contraseña:");
+
+// Pedir contraseña y mostrar la sección de pregunta
+function pedirContraseña() {
+    if(password.toLowerCase() === "haely michell") {
+        document.getElementById("inicio").classList.add("hidden");
+        document.getElementById("pregunta").classList.remove("hidden");
+        reproducirMusica(); // Música empieza aquí, al clic
+    } else {
+        alert("Contraseña incorrecta 😢");
+    }
+}
+
+// Reproducir música
+function reproducirMusica() {
+    const audio = document.getElementById("musica");
+    audio.play();
+}
+
+// Corazones flotando
+function crearCorazon() {
+    const corazon = document.createElement("div");
+    corazon.classList.add("corazon");
+    corazon.innerHTML = "❤️";
+    corazon.style.left = Math.random() * 100 + "vw";
+    corazon.style.fontSize = (Math.random() * 20 + 15) + "px";
+    document.body.appendChild(corazon);
+    setTimeout(() => { corazon.remove(); }, 6000);
+}
+
+// Explosión de corazones al decir "Sí"
+function explosionCorazones() {
+    for(let i=0; i<100; i++){
+        setTimeout(crearCorazon, i*50);
+    }
+    document.getElementById("carta").innerHTML += "<br><br>¡Eres mi San Valentín! 💍❤️";
+    document.getElementById("yesButton").disabled = true;
+    document.getElementById("noButton").disabled = true;
+}
+
+// Botón "No" que se mueve
+function huir() {
+    const btn = document.getElementById("noButton");
+    btn.style.top = Math.random()*200 - 100 + "px";
+    btn.style.left = Math.random()*200 - 100 + "px";
+}
+
+setInterval(crearCorazon, 400);
+</script>
+
 </body>
 </html>
